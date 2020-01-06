@@ -1,7 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-import 'bean/index_entity.dart';
 import 'pages/home_page.dart';
 
 void main() => runApp(MyApp());
@@ -67,28 +65,11 @@ class SkeletonState extends State<Skeleton> {
                 color: Colors.red,
                 size: 30,
               ),
-              onPressed: () {
-                getHttp(
-                    "https://sspai.com/api/v1/article/matrix/page/get?limit=3&offset=0");
-              },
+              onPressed: () {},
             )
           ],
         ),
       ),
-      //      bottomNavigationBar: BottomNavigationBar(
-      //        // 底部导航
-      //        items: <BottomNavigationBarItem>[
-      //          BottomNavigationBarItem(
-      //              icon: Icon(Icons.art_track), title: Text('Home')),
-      //          BottomNavigationBarItem(
-      //              icon: Icon(Icons.lightbulb_outline), title: Text('More')),
-      //          BottomNavigationBarItem(
-      //              icon: Icon(Icons.supervised_user_circle), title: Text('Me')),
-      //        ],
-      //        currentIndex: _selectedIndex,
-      //        fixedColor: Colors.blue,
-      //        onTap: _onItemTapped,
-      //      ),
     );
   }
 
@@ -96,14 +77,5 @@ class SkeletonState extends State<Skeleton> {
     setState(() {
       _selectedIndex = index;
     });
-  }
-}
-
-void getHttp(String url) async {
-  try {
-    Response response = await Dio().get(url);
-    IndexEntity indexEntity = new IndexEntity.fromJson(response.data);
-  } catch (e) {
-    print(e + "错误");
   }
 }
