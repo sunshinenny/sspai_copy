@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import 'bean/index_entity.dart';
 import 'pages/home_page.dart';
 
 void main() => runApp(MyApp());
@@ -62,10 +64,13 @@ class SkeletonState extends State<Skeleton> {
             IconButton(
               icon: Icon(
                 Icons.supervised_user_circle,
-                color: Colors.grey,
+                color: Colors.red,
                 size: 30,
               ),
-              onPressed: () {},
+              onPressed: () {
+                getHttp(
+                    "https://sspai.com/api/v1/article/matrix/page/get?limit=3&offset=0");
+              },
             )
           ],
         ),
@@ -91,5 +96,14 @@ class SkeletonState extends State<Skeleton> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+}
+
+void getHttp(String url) async {
+  try {
+    Response response = await Dio().get(url);
+    IndexEntity indexEntity = new IndexEntity.fromJson(response.data);
+  } catch (e) {
+    print(e + "错误");
   }
 }

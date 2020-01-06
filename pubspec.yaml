@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   json_annotation: ^3.0.1
+  dio: 3.0.8
 
 dev_dependencies:
   flutter_test:
