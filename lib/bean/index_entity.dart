@@ -34,12 +34,12 @@ class IndexEntityData {
   int post_type;
   int important;
   int released_time;
-  List<String> morning_paper_title;
+  List<dynamic> morning_paper_title;
   String advertisement_url;
-  List<int> series;
+  List<dynamic> series;
   IndexEntityAuthor author;
   IndexEntityCorner corner;
-  List<int> special_columns;
+  List<dynamic> special_columns;
   int status;
 
   factory IndexEntityData.fromJson(Map<String, dynamic> json) =>

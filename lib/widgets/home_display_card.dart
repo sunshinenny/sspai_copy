@@ -2,8 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sspai_copy/bean/index_entity.dart';
 
 class HomeDisplayCard extends StatelessWidget {
+  HomeDisplayCard({Key key, this.indexEntityData}) : super(key: key);
+  IndexEntityData indexEntityData;
+
   @override
   Widget build(BuildContext context) {
     // 定义四周间距
@@ -13,10 +17,16 @@ class HomeDisplayCard extends StatelessWidget {
         children: <Widget>[
           Flex(
             children: <Widget>[
-              IconNameAndOptions(),
-              ImageFromSspai(),
-              TextTitleAndBody(),
-              ButtomInfo()
+              IconNameAndOptions(
+                indexEntityData: indexEntityData,
+              ),
+              ImageFromSspai(banner: indexEntityData.banner),
+              TextTitleAndBody(
+                indexEntityData: indexEntityData,
+              ),
+              ButtomInfo(
+                indexEntityData: indexEntityData,
+              )
             ],
             direction: Axis.vertical,
           ),
@@ -28,9 +38,9 @@ class HomeDisplayCard extends StatelessWidget {
 
 /// 用户头像、用户名和操作项
 class IconNameAndOptions extends StatelessWidget {
-  const IconNameAndOptions({
-    Key key,
-  }) : super(key: key);
+  IconNameAndOptions({Key key, this.indexEntityData}) : super(key: key);
+
+  IndexEntityData indexEntityData;
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +52,17 @@ class IconNameAndOptions extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
               child: ClipOval(
-                  child: Image.asset(
-                "assets/images/myLogo.jpg",
+                  child: Image.network(
+                "https://cdn.sspai.com/${indexEntityData.author.avatar}",
                 width: 40,
               )),
               onTap: () => {print("Show User Home Page")},
             ),
             Text(
-              "SunShinenny",
-              style: TextStyle(fontSize: 18, color: Colors.black54),
+              "${indexEntityData.author.nickname}",
+              style: TextStyle(
+                  fontSize: 18,
+                  color: isDarkMode(context) ? Colors.white : Colors.black54),
             ),
           ],
         ),
@@ -63,7 +75,7 @@ class IconNameAndOptions extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 26,
-                  color: Colors.black26,
+                  color: isDarkMode(context) ? Colors.white : Colors.black26,
                 ),
               ),
               onTap: () {
@@ -79,22 +91,24 @@ class IconNameAndOptions extends StatelessWidget {
 
 /// 文章标题以及文章简介部分
 class TextTitleAndBody extends StatelessWidget {
-  const TextTitleAndBody({
-    Key key,
-  }) : super(key: key);
+  TextTitleAndBody({Key key, this.indexEntityData}) : super(key: key);
+
+  IndexEntityData indexEntityData;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Text(
-          "具透 | 三星最快的一次系统升级，One UI 2 正式版都有这些亮点",
+          "${indexEntityData.title}",
           style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
         ),
         Text(
-          "作为 One UI 的第一次大版本迭代，One UI 2 的更新内容的确诚意满满，加之此次国行设备更新速度之快也让国内的三星用户倍感欣慰。",
+          "${indexEntityData.summary}",
           maxLines: 2,
-          style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+          style: TextStyle(
+              fontSize: 14,
+              color: isDarkMode(context) ? Colors.white : Colors.grey[600]),
         ),
       ],
     );
@@ -103,9 +117,9 @@ class TextTitleAndBody extends StatelessWidget {
 
 /// 从少数派读取的图片
 class ImageFromSspai extends StatelessWidget {
-  const ImageFromSspai({
-    Key key,
-  }) : super(key: key);
+  ImageFromSspai({Key key, this.banner}) : super(key: key);
+
+  String banner;
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +129,7 @@ class ImageFromSspai extends StatelessWidget {
         borderRadius: BorderRadius.circular(6.0),
         child: Image.network(
           //                    "https://cdn.sspai.com/article/55806f27-a137-0fb3-1248-0bffd08a773c.jpg?imageMogr2/quality/95/thumbnail/!456x456r/gravity/Center/crop/456x456/interlace/1",
-          "https://cdn.sspai.com/article/ba5d6cb3-b338-25b6-5bcc-5223803696d9.jpg?imageMogr2/quality/95/thumbnail/!1200x400r/gravity/Center/crop/1200x400/interlace/1",
+          "https://cdn.sspai.com/${banner}?imageMogr2/quality/95/thumbnail/!1200x400r/gravity/Center/crop/1200x400/interlace/1",
         ),
       ),
     );
@@ -124,9 +138,9 @@ class ImageFromSspai extends StatelessWidget {
 
 /// 底部点赞等信息展示栏
 class ButtomInfo extends StatelessWidget {
-  const ButtomInfo({
-    Key key,
-  }) : super(key: key);
+  ButtomInfo({Key key, this.indexEntityData}) : super(key: key);
+
+  IndexEntityData indexEntityData;
 
   @override
   Widget build(BuildContext context) {
@@ -143,12 +157,17 @@ class ButtomInfo extends StatelessWidget {
                 children: <Widget>[
                   Icon(
                     Icons.favorite_border,
-                    color: Colors.grey[400],
+                    color:
+                        isDarkMode(context) ? Colors.white : Colors.grey[400],
                     size: 15,
                   ),
                   Text(
-                    "13 · 20 评论",
-                    style: TextStyle(fontSize: 15, color: Colors.grey[600]),
+                    "${indexEntityData.like_count} · ${indexEntityData.comment_count} 评论",
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: isDarkMode(context)
+                            ? Colors.white
+                            : Colors.grey[600]),
                   ),
                 ],
               ),
@@ -157,10 +176,15 @@ class ButtomInfo extends StatelessWidget {
           Spacer(),
           Row(
             children: <Widget>[
-              Icon(Icons.sync, color: Colors.grey[500], size: 15),
+              Icon(Icons.sync,
+                  color: isDarkMode(context) ? Colors.white : Colors.grey[500],
+                  size: 15),
               Text(
-                " 17 小时前推荐",
-                style: TextStyle(fontSize: 15, color: Colors.grey[600]),
+                " ${getHowLongAgo(indexEntityData.released_time)}前推荐",
+                style: TextStyle(
+                    fontSize: 15,
+                    color:
+                        isDarkMode(context) ? Colors.white : Colors.grey[600]),
               )
             ],
           )
@@ -168,4 +192,15 @@ class ButtomInfo extends StatelessWidget {
       ),
     );
   }
+}
+
+String getHowLongAgo(int timestamp) {
+  int nowTimestamp = DateTime.now().millisecondsSinceEpoch;
+  int d = (nowTimestamp - timestamp * 1000) ~/ (3600 * 1000);
+  String msg = d >= 24 ? "${d ~/ 24} 天" : "$d 小时";
+  return msg;
+}
+
+bool isDarkMode(BuildContext context) {
+  return Theme.of(context).brightness == Brightness.dark;
 }

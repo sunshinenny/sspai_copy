@@ -9,9 +9,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '少数派',
+      darkTheme: ThemeData(
+          primarySwatch: Colors.blueGrey,
+          primaryColorBrightness: Brightness.dark,
+          primaryColorDark: Colors.blueGrey,
+          scaffoldBackgroundColor: Colors.blueGrey,
+          bottomAppBarColor: Colors.blueGrey[200]),
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primarySwatch: Colors.red, primaryColorBrightness: Brightness.dark),
       home: Skeleton(),
     );
   }
@@ -54,7 +59,7 @@ class SkeletonState extends State<Skeleton> {
             IconButton(
               icon: Icon(
                 Icons.lightbulb_outline,
-                color: Colors.grey,
+                color: isDarkMode(context)? Colors.white :Colors.grey,
                 size: 30,
               ),
               onPressed: () {},
@@ -62,7 +67,7 @@ class SkeletonState extends State<Skeleton> {
             IconButton(
               icon: Icon(
                 Icons.supervised_user_circle,
-                color: Colors.red,
+                color: isDarkMode(context)? Colors.white :Colors.grey,
                 size: 30,
               ),
               onPressed: () {},
@@ -77,5 +82,9 @@ class SkeletonState extends State<Skeleton> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  bool isDarkMode(BuildContext context){
+    return Theme.of(context).brightness == Brightness.dark;
   }
 }
