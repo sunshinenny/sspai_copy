@@ -16,43 +16,57 @@ class HomeDisplayCard extends StatelessWidget {
               IconNameAndOptions(),
               ImageFromSspai(),
               TextTitleAndBody(),
-              Flex(
-                direction: Axis.horizontal,
-                children: <Widget>[
-                  Expanded(
-                    flex: 4,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        FlatButton.icon(
-                          onPressed: () {},
-                          label: Text(
-                            "13",
-                            style: TextStyle(
-                                fontSize: 16, color: Colors.grey[600]),
-                          ),
-                          icon: Icon(
-                            Icons.favorite_border,
-                            color: Colors.grey[600],
-                            size: 16,
-                          ),
-                          padding: EdgeInsets.zero,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Row(
-                      children: <Widget>[Text("")],
-                    ),
-                  )
-                ],
-              )
+              ButtomInfo()
             ],
             direction: Axis.vertical,
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class ButtomInfo extends StatelessWidget {
+  const ButtomInfo({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Row(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                // 纵向对齐方式
+                spacing: 8,
+                children: <Widget>[
+                  Icon(
+                    Icons.favorite_border,
+                    color: Colors.grey[400],
+                    size: 15,
+                  ),
+                  Text(
+                    "13 · 20 评论",
+                    style: TextStyle(fontSize: 15, color: Colors.grey[600]),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Spacer(),
+          Row(
+            children: <Widget>[
+              Icon(Icons.sync, color: Colors.grey[500], size: 15),
+              Text(
+                " 17 小时前推荐",
+                style: TextStyle(fontSize: 15, color: Colors.grey[600]),
+              )
+            ],
+          )
         ],
       ),
     );
